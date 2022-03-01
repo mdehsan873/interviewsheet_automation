@@ -14,6 +14,7 @@ dashboard = client.open(constant.SHEET_NAME).get_worksheet_by_id(constant.DASHBO
 
 
 def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, dashboard_month_column):
+    print('Working on it')
     sheet = client.open(constant.SHEET_NAME).get_worksheet_by_id(worksheet_id)
 
     topic_count = {}
@@ -68,7 +69,7 @@ def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, das
         question_row = question_row + 1
 
         # print(topic_count)
-        time.sleep(2)
+        time.sleep(5)
     col = dashboard_month_column
 
     row = dashboard_month_row
