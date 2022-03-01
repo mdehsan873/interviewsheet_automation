@@ -18,25 +18,45 @@ client_interview = client.open(constant.SHEET_NAME).get_worksheet_by_id(constant
 def failed_interview(java, react_native, react_js, android, django):
     print("Failed Interview")
     for mon, row in months.items():
-        total_interview = len(java[mon]) + len(react_js[mon]) + len(react_native[mon]) + len(android[mon]) + len(
-            django[mon])
+        total_interview=0
+        if java.__contains__(mon):
+            total_interview = len(java[mon])
+        if react_js.__contains__(mon):
+            total_interview+=len(react_js[mon])
+        if react_native.__contains__(mon):
+            total_interview=+ len(react_native[mon])
+        if android.__contains__(mon):
+            total_interview=+ len(android[mon])
+        if django.__contains__(mon):
+            total_interview=+ len(django[mon])
         failed_interview = 0
-        for failed in java[mon]:
-            if failed == 'Rejected':
-                failed_interview += 1
-        for failed in react_js[mon]:
-            if failed == 'Rejected':
-                failed_interview += 1
-        for failed in android[mon]:
-            if failed == 'Rejected':
-                failed_interview += 1
-        for failed in react_native[mon]:
-            if failed == 'Rejected':
-                failed_interview += 1
-        for failed in django[mon]:
-            if failed == 'Rejected':
-                failed_interview += 1
-        percent=(failed/total_interview)*100
+        if java.__contains__(mon):
+            for failed in java[mon]:
+                if failed == 'Rejected':
+                    failed_interview += 1
+        if react_js.__contains__(mon):
+            for failed in react_js[mon]:
+                if failed == 'Rejected':
+                    failed_interview += 1
+        if android.__contains__(mon):
+            for failed in android[mon]:
+                if failed == 'Rejected':
+                    failed_interview += 1
+        if react_native.__contains__(mon):
+            for failed in react_native[mon]:
+                if failed == 'Rejected':
+                    failed_interview += 1
+        if django.__contains__(mon):
+            for failed in django[mon]:
+                if failed == 'Rejected':
+                    failed_interview += 1
+        print(failed_interview)
+        print(total_interview)
+        percent=0
+        try:
+            percent=(failed_interview/total_interview)*100
+        except ZeroDivisionError:
+            percent=0
         dashboard.update_cell(months[mon] + 30, 7,percent)
 
 
@@ -164,10 +184,10 @@ def interview_clearance():
             except IndexError:
                 react_native.__setitem__(None, status[i])
     print(react_js)
-    populate(react_js, 0)
-    populate(django, 12)
-    populate(android, 24)
-    populate(node, 36)
-    populate(java, 48)
-    populate(react_native, 60)
+    # populate(react_js, 0)
+    # populate(django, 12)
+    # populate(android, 24)
+    # populate(node, 36)
+    # populate(java, 48)
+    # populate(react_native, 60)
     failed_interview(java, react_native, react_js, android, django)
