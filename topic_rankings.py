@@ -13,7 +13,24 @@ client = gspread.authorize(cred)
 dashboard = client.open(constant.SHEET_NAME).get_worksheet_by_id(constant.DASHBOARD_SHEET_ID)
 
 
-def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, dashboard_month_column):
+def populate_data(worksheet_id, topic_rows, month_rows, technology):
+    cell_details = dashboard.find('Topic Rankings based on Interview Qs')
+    print(cell_details.row)
+    topic_row = cell_details.row + 3
+    topic_col = 0
+    if technology == 'ReactJS':
+        topic_col = cell_details.col + 1
+
+    if technology == 'Java':
+        topic_col = cell_details.col + 6
+    if technology == 'Django':
+        topic_col = cell_details.col + 11
+    if technology == 'NodeJS':
+        topic_col = cell_details.col + 16
+    if technology == 'React Native':
+        topic_col = cell_details.col + 21
+        print(topic_col)
+
     print('Working on it')
     sheet = client.open(constant.SHEET_NAME).get_worksheet_by_id(worksheet_id)
 
@@ -49,20 +66,18 @@ def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, das
             print(topic_count.get(month))
             topic = sheet.cell(topics_row, 4).value
             print(topic)
-            question =sheet.cell(question_row, 5).value
+            question = sheet.cell(question_row, 5).value
             if question is None:
                 empty_question_cell = empty_question_cell + 1
                 print(empty_question_cell)
             else:
-                empty_question_cell=0
+                empty_question_cell = 0
                 if topic_count.__contains__(month):
                     if topic:
                         topic_count.__getitem__(month).append(topic)
                 else:
                     if topic:
-                        topic_count.__setitem__(month,topic)
-
-
+                        topic_count.__setitem__(month, topic)
 
         months_row = months_row + 1
         topics_row = topics_row + 1
@@ -70,9 +85,9 @@ def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, das
 
         # print(topic_count)
         time.sleep(5)
-    col = dashboard_month_column
+    col = topic_col
 
-    row = dashboard_month_row
+    row = topic_row
     for months in month_list:
 
         topic_counts = {}
@@ -92,9 +107,9 @@ def populate_data(worksheet_id, topic_rows, month_rows, dashboard_month_row, das
             for k, v in sorted_topic.items():
                 dashboard.update_cell(row, col, k)
                 i += 1
-                col = 1 + col
+                col = col + 1
                 if i >= 5:
                     break
-        col = dashboard_month_column
+        col = topic_col
         row = row + 1
         print(row)
