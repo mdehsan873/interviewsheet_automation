@@ -96,7 +96,7 @@ def populate(data, row_no, col_no, add):
 def interview_clearance():
     cell = dashboard.find("Client Interview Performance")
 
-    print("Found something at R%sC%s" % (cell.row, cell.col))
+    # print("Found something at R%sC%s" % (cell.row, cell.col))
     tech_cell = client_interview.find('Technology/Skill')
     date_cell = client_interview.find('DATE')
     status_cell = client_interview.find('Result')
@@ -116,7 +116,7 @@ def interview_clearance():
 
             date = dates[i].split('-')
             try:
-                print(date[1])
+                # print(date[1])
                 if react_js.__contains__(date[1]):
 
                     react_js.get(date[1]).append(status[i])
@@ -190,7 +190,7 @@ def interview_clearance():
                     react_native.__setitem__(date[1], interview_status)
             except IndexError:
                 react_native.__setitem__(None, status[i])
-    print(react_js)
+    # print(react_js)
     populate(react_js, cell.row, cell.col, 0)
     populate(django, cell.row, cell.col, 12)
     populate(android, cell.row, cell.col, 24)

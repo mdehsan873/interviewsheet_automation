@@ -15,7 +15,7 @@ dashboard = client.open(constant.SHEET_NAME).get_worksheet_by_id(constant.DASHBO
 
 def populate_data(worksheet_id, topic_rows, month_rows, technology):
     cell_details = dashboard.find('Topic Rankings based on Interview Qs')
-    print(cell_details.row)
+    # print(cell_details.row)
     topic_row = cell_details.row + 3
     topic_col = 0
     if technology == 'ReactJS':
@@ -24,14 +24,14 @@ def populate_data(worksheet_id, topic_rows, month_rows, technology):
     if technology == 'Java':
         topic_col = cell_details.col + 6
     if technology == 'Django':
-        topic_col = cell_details.col + 11
+        topic_col = cell_details.col + 12
     if technology == 'NodeJS':
-        topic_col = cell_details.col + 16
+        topic_col = cell_details.col + 17
     if technology == 'React Native':
-        topic_col = cell_details.col + 21
-        print(topic_col)
+        topic_col = cell_details.col + 22
+        # print(topic_col)
 
-    print('Working on it')
+    # print('Working on it')
     sheet = client.open(constant.SHEET_NAME).get_worksheet_by_id(worksheet_id)
 
     topic_count = {}
@@ -63,13 +63,13 @@ def populate_data(worksheet_id, topic_rows, month_rows, technology):
                     topic_count.get(month).append(topic)
 
         else:
-            print(topic_count.get(month))
+            # print(topic_count.get(month))
             topic = sheet.cell(topics_row, 4).value
-            print(topic)
+            # print(topic)
             question = sheet.cell(question_row, 5).value
             if question is None:
                 empty_question_cell = empty_question_cell + 1
-                print(empty_question_cell)
+                # print(empty_question_cell)
             else:
                 empty_question_cell = 0
                 if topic_count.__contains__(month):
@@ -94,14 +94,14 @@ def populate_data(worksheet_id, topic_rows, month_rows, technology):
 
         if topic_count.__contains__(months):
             topics = topic_count.get(months)
-            print(topics)
+            # print(topics)
             for topic in topics:
                 if topic_counts.__contains__(topic):
                     topic_counts.__setitem__(topic, topic_counts.get(topic) + 1)
                 else:
                     topic_counts.__setitem__(topic, 1)
             sorted_topic = dict(sorted(topic_counts.items(), key=operator.itemgetter(1), reverse=True))
-            print(sorted_topic)
+            # print(sorted_topic)
             i = 0
 
             for k, v in sorted_topic.items():
@@ -112,4 +112,4 @@ def populate_data(worksheet_id, topic_rows, month_rows, technology):
                     break
         col = topic_col
         row = row + 1
-        print(row)
+        # print(row)
