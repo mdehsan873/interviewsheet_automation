@@ -1,5 +1,5 @@
 cred.json
-.idea
-__pycache__
-bin
+.idea/
+__pycache__/
+bin/
 *.pyc
